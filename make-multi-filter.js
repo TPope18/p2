@@ -1,23 +1,22 @@
 'use strict';
 
-function MakeMultiFilter(originalArray) {
-    function arrayFilterer(filterCriteria, callback) {
-        let currentArray = originalArray.splice();
-        //for loop that runs filterCriteria function
-        console.log(currentArray.length);
-        for (let i = 0; i < currentArray.length; i++) {
-            if (!filterCriteria(currentArray[i])) {
-                console.log(currentArray[i]);
-                currentArray.splice(i, i);
+function MakeMultiFilter(originalArray){
+    const arrayFilterer = function (filterCriteria = undefined, callback = undefined){
+        if (arrayFilterer.currentArray === undefined){
+            arrayFilterer.currentArray = originalArray;
+        }
+        if (Array.isArray(originalArray)) {
+            if ((typeof filterCriteria === "function")) {
+                arrayFilterer.currentArray =
+                    arrayFilterer.currentArray.filter(e => filterCriteria(e));
+            } else {
+                return arrayFilterer.currentArray;
             }
         }
-        console.log(originalArray);
-        console.log(currentArray);
-        //callback
-    }
+        if (typeof callback === 'function'){
+            callback.call(originalArray, arrayFilterer.currentArray);
+        }
+        return arrayFilterer;
+    };
     return arrayFilterer;
 }
-
-const arr = [1, 2, 3];
-var arrayFilterer1 = MakeMultiFilter(arr);
-arrayFilterer1(function(elem) {return elem !== 2;}, function() {});
