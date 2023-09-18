@@ -1,5 +1,7 @@
 'use strict';
 
+(function ()
+{
 /*
  * This file tests the Project #2 JavaScript assignment problems. It prints what
  * it finds to the console log and updates the text being displayed in the window with a
@@ -153,3 +155,4 @@ window.onload = function () {
   document.getElementById('p2').innerHTML = p2Message;
   document.getElementById('p3').innerHTML = p3Message;
 };
+})();
